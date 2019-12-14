@@ -4,24 +4,22 @@ class Settings():
 
         self.res = (1280, 720)
 
-        self.FPS = 60
-        self.color_line = (255,255,255)
+        self.FPS = 120
+        self.sound = "C:\\Users\\Tr0ub1e\\Desktop\\Wangan Midnight\\music\\strange.mp3"
+
         self.chords_lines = [
+                        #left side (from bottom to mid)
+                        [-1000, 720], [135, 515], [490, 450],
 
-                         (self.res[0]*7/16, self.res[1]/2), (0, self.res[1]*7/9),
-
-                         (self.res[0]/2, self.res[1]/2), (self.res[0]/2, self.res[1]),
-
-                         (self.res[0]*9/16, self.res[1]/2), (self.res[0], self.res[1]*7/9),
-
-                         #for road
-                         (self.res[0]+400, self.res[1]), (-400, self.res[1])
+                        #right side (from mid to bottom)
+                        [790, 450], [1145, 515], [2280, 720]
 
                                 ]
 
-        self.color_bg = (128,128,128)
-        self.color_road = (64,64,64)
-        self.color_imitate_speed = (255,32,64)
+        self.chords_bg = [
+                        (0, 360), (1280, 360), (1280, 720), (0, 720)
+                        ]
 
-        #self.color_clouds = (15,181,247)
-        #self.chords_clouds = (0, 0, self.res[0], self.res[1]/2)
+        self.color_bg = (128,128,128)
+        self.color_rd = (64,64,64)
+        self.color_imitate_speed = (96,96,96)
