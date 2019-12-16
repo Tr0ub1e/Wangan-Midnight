@@ -5,14 +5,15 @@ class Settings():
         self.res = (1280, 720)
 
         self.FPS = 120
+
         self.sound = "C:\\Users\\Tr0ub1e\\Desktop\\Wangan Midnight\\music\\strange.mp3"
 
         self.chords_lines = [
                         #left side (from bottom to mid)
-                        [-1000, 720], [135, 515], [490, 450],
+                        [-1000, 720], [135, 515], [357, 437], [610, 360],
 
                         #right side (from mid to bottom)
-                        [790, 450], [1145, 515], [2280, 720]
+                        [670, 360], [922, 437], [1145, 515], [2280, 720]
 
                                 ]
 

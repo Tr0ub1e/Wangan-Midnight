@@ -22,7 +22,7 @@ class Car():
     def update_car(self, move):
 
         if move == 'right':
-            self.rect.x += 5
+            self.rect.x += 10
 
         if move == 'left':
-            self.rect.x -= 5
+            self.rect.x -= 10
