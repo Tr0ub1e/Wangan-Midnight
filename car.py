@@ -1,11 +1,12 @@
 import pygame
+from os import getcwd
 
 class Car():
 
     def __init__(self, screen):
         self.screen = screen
 
-        self.image = pygame.image.load('C:\\Users\\Tr0ub1e\\Desktop\\Wangan Midnight\\images\\car2.png').convert_alpha()
+        self.image = pygame.image.load(getcwd()+'\\images\\car2.png').convert_alpha()
         self.screen_rect = screen.get_rect()
         self.rect = self.image.get_rect()
 
