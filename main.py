@@ -27,7 +27,7 @@ def main():
     TURNING = pygame.USEREVENT + 2
 
     pygame.time.set_timer(TURNING, 2000)
-    pygame.time.set_timer(MOVE_D, 375)
+    pygame.time.set_timer(MOVE_D, 500)
 
     while True:
 
