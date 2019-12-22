@@ -9,10 +9,8 @@ class Speedline(Sprite):
 
         self.screen = screen
         self.color = color
-        #self.bg_y = bg_y
-        self.dz = 2
 
-        self.rect = pygame.Rect(0, 400, res[0], 0)
+        self.rect = pygame.Rect(0, 420, res[0], 0)
 
     def draw_lines(self):
         pygame.draw.rect(self.screen, self.color, self.rect)

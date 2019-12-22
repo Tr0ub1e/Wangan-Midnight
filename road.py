@@ -6,9 +6,9 @@ class Background():
     def __init__(self, screen, color_bg, color_rd, chords_rd=[]):
 
         self.screen = screen
-        self.im_bg = pygame.image.load(getcwd()+"\\images\\sun.bmp").convert_alpha()
+        self.im_bg = pygame.image.load(getcwd()+"\\images\\sun2.bmp").convert_alpha()
         self.rect_im = self.im_bg.get_rect()
-        #self.rect_im.top = -100
+        self.rect_im.top = -100
         self.rect_im.centerx = 640
 
         self.color_bg = color_bg
@@ -27,6 +27,7 @@ class Background():
         pygame.draw.polygon(self.screen, self.color_rd, (self.chords_rd[0], self.chords_rd[1], self.chords_rd[2], self.chords_rd[3], self.chords_rd[4],
                                                             self.chords_rd[5], self.chords_rd[6], self.chords_rd[7], self.chords_rd[8], self.chords_rd[9],
                                                             self.chords_rd[10], self.chords_rd[11], self.chords_rd[12], self.chords_rd[13]))
+
 
 
 

@@ -4,13 +4,12 @@ from settings import Settings
 from car import Car
 from speedline import Speedline
 from road import Background
-
+from tree import Tree
 
 def main():
     pygame.init()
     g_set = Settings()
     bg_y = g_set.chords_lines[4][1]
-    image = pygame.image.load(g_set.tree)
 
     turn = 'center'
 
@@ -24,8 +23,8 @@ def main():
     bg = Background(screen, g_set.color_bg, g_set.color_rd, g_set.chords_lines)
 
     lines = pygame.sprite.Group()
+    trees = pygame.sprite.Group()
 
-    MOVE_D = pygame.USEREVENT + 1
     TURNING = pygame.USEREVENT + 2
 
     pygame.time.set_timer(TURNING, 1500)
@@ -39,19 +38,20 @@ def main():
         keys = pygame.key.get_pressed()
         move = gf.check_keydown_events(keys)
 
-
         bg.draw_background()
-
-        #bg_y = bg.make_hills()
-        #bg.make_turns(turn)
-
 
         gf.append_l(screen, lines, g_set.color_imitate_speed, g_set.res, move)
 
         for line in lines.copy():
             line.draw_lines()
 
+        for tr in trees.copy():
+            tr.draw_trees()
+
         gf.imitate_speed(screen, lines, g_set.color_imitate_speed, g_set.res, move)
+        gf.append_tr(screen, trees)
+        gf.move_tr(screen, trees, move)
+
         car.blitme()
         #car.update_car(move)
 
@@ -59,4 +59,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-input()
