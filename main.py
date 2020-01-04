@@ -9,7 +9,6 @@ from tree import Tree
 def main():
     pygame.init()
     g_set = Settings()
-    bg_y = g_set.chords_lines[4][1]
 
     turn = 'center'
 
@@ -25,15 +24,15 @@ def main():
     lines = pygame.sprite.Group()
     trees = pygame.sprite.Group()
 
-    TURNING = pygame.USEREVENT + 2
+    TURNING = pygame.USEREVENT + 1
 
-    pygame.time.set_timer(TURNING, 1500)
+    pygame.time.set_timer(TURNING, 500)
 
     while True:
-
+        screen.fill((0,0,0))
         clock.tick(g_set.FPS)
 
-        turn = gf.check_events(turn, TURNING)
+        turn = gf.check_events(screen, trees, turn, TURNING)
 
         keys = pygame.key.get_pressed()
         move = gf.check_keydown_events(keys)

@@ -6,7 +6,7 @@ class Background():
     def __init__(self, screen, color_bg, color_rd, chords_rd=[]):
 
         self.screen = screen
-        self.im_bg = pygame.image.load(getcwd()+"\\images\\sun2.bmp").convert_alpha()
+        self.im_bg = pygame.image.load(getcwd()+"\\images\\city.bmp").convert_alpha()
         self.rect_im = self.im_bg.get_rect()
         self.rect_im.top = -100
         self.rect_im.centerx = 640
