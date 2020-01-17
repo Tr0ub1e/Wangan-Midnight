@@ -6,7 +6,7 @@ from os import getcwd
 
 class Tree(Sprite):
 
-    def __init__(self, screen):
+    def __init__(self, screen, bottom, x):
         super(Tree, self).__init__()
 
 
@@ -25,12 +25,12 @@ class Tree(Sprite):
         self.rect_l2 = self.light2.get_rect()
 
 
-        self.rect_im.bottom = self.sec_rect_im.bottom = 480
-        self.rect_l.bottom = self.rect_l2.bottom = 480
+        self.rect_im.bottom = self.sec_rect_im.bottom = bottom
+        self.rect_l.bottom = self.rect_l2.bottom = bottom
 
-        self.rect_l.x, self.rect_l2.x = 540, (1280 - self.rect_l.x)
+        self.rect_l.x, self.rect_l2.x = x-self.rect_im.w-self.rect_l.w, (1280 - self.rect_l.x)
 
-        self.rect_im.x = 560-self.rect_im.w
+        self.rect_im.x = x-self.rect_im.w
         self.sec_rect_im.x = (1280 - self.rect_im.x)
 
     def draw_trees(self):

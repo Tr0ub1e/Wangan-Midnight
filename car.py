@@ -6,7 +6,9 @@ class Car():
     def __init__(self, screen):
         self.screen = screen
 
-        self.image = pygame.image.load(getcwd()+"\\images\\carr.png").convert_alpha()
+        self.image = pygame.image.load(getcwd()+"\\images\\nissan.png").convert()
+        self.image.set_colorkey((255,255,255))
+
         self.screen_rect = screen.get_rect()
         self.rect = self.image.get_rect()
 

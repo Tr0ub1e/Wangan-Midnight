@@ -18,57 +18,87 @@ class Background():
         self.chords_rd = chords_rd
         self.route = True
 
-        self.bg_rect = pygame.Rect(0, self.chords_rd[6][1], 1280, 350)
-
     def draw_background(self):
+        self.bg_rect = pygame.Rect(0, self.chords_rd[6][1], 1280, 350)
 
         self.screen.blit(self.im_bg, self.rect_im)
         pygame.draw.rect(self.screen, self.color_bg, self.bg_rect)
-        pygame.draw.polygon(self.screen, self.color_rd, (self.chords_rd[0], self.chords_rd[1], self.chords_rd[2], self.chords_rd[3], self.chords_rd[4],
-                                                            self.chords_rd[5], self.chords_rd[6], self.chords_rd[7], self.chords_rd[8], self.chords_rd[9],
-                                                            self.chords_rd[10], self.chords_rd[11], self.chords_rd[12], self.chords_rd[13]))
+
+        pygame.draw.polygon(self.screen, (0,0,0), (self.chords_rd[0], self.chords_rd[1], self.chords_rd[-2], self.chords_rd[-1]))
+        pygame.draw.polygon(self.screen, (0,0,0), (self.chords_rd[1], self.chords_rd[2], self.chords_rd[-3], self.chords_rd[-2]))
+        pygame.draw.polygon(self.screen, (0,0,0), (self.chords_rd[2], self.chords_rd[3], self.chords_rd[-4], self.chords_rd[-3]))
+        pygame.draw.polygon(self.screen, (0,0,0), (self.chords_rd[3], self.chords_rd[4], self.chords_rd[-5], self.chords_rd[-4]))
+        pygame.draw.polygon(self.screen, (0,0,0), (self.chords_rd[4], self.chords_rd[5], self.chords_rd[-6], self.chords_rd[-5]))
+        pygame.draw.polygon(self.screen, (0,0,0), (self.chords_rd[5], self.chords_rd[6], self.chords_rd[-7], self.chords_rd[-6]))
 
 
+    def make_hills(self, run):
+        dx = -8
+        ddy = 1
 
+        if run and self.chords_rd[6][0] > 520:
+            k = 1
+            for i in range(1, (len(self.chords_rd)//2)):
 
-    def make_hills(self):
-        pass
+                self.chords_rd[k][0] += dx
+                self.chords_rd[-k-1][0] -= dx
 
-        return self.chords_rd[3][1]
+                if k < 2:
+
+                    self.chords_rd[7-k][1] += ddy
+                    self.chords_rd[6+k][1] += ddy
+
+                elif k > 3:
+
+                    self.chords_rd[7-k][1] += ddy
+                    self.chords_rd[6+k][1] += ddy
+
+                k += 1
+            #print(self.chords_rd)
+
+        if run == False and self.chords_rd[6][0] < 600:
+            k = 1
+            for i in range(1, (len(self.chords_rd)//2)):
+
+                self.chords_rd[k][0] -= dx
+                self.chords_rd[-k-1][0] += dx
+
+                if k < 2:
+
+                    self.chords_rd[7-k][1] -= ddy
+                    self.chords_rd[6+k][1] -= ddy
+
+                elif k > 3:
+
+                    self.chords_rd[7-k][1] -= ddy
+                    self.chords_rd[6+k][1] -= ddy
+
+                k += 1
+#            print(self.chords_rd)
+
+        return self.chords_rd[6][0], self.chords_rd[6][1]
+
 
 
     def make_turns(self, turn):
-        dx = 4
+        pass
+"""
+if run and self.chords_rd[6][0] > 520:
 
-        if turn == 'left':
+    for i in range(1, (len(self.chords_rd)//2)):
 
-            for i in self.chords_rd:
+        self.chords_rd[k][0] += dx
+        self.chords_rd[-k-1][0] -= dx
 
-                if self.chords_rd[1][0] > 0:
-                    i[0] -= dx
-                    dx += 3
+        if k < 2:
 
-                if self.chords_rd.index(i) >= (len(self.chords_rd)/2)-1:
-                    dx -= 7
+            self.chords_rd[7-k][1] += ddy
+            self.chords_rd[6+k][1] += ddy
 
-        if turn == 'center':
+        elif k > 3:
 
-            for i in self.chords_rd:
+            self.chords_rd[7-k][1] += ddy
+            self.chords_rd[6+k][1] += ddy
 
-                if self.chords_rd[1][0] > 100:
-                    i[0] += dx
-                    dx += 3
-
-                if self.chords_rd.index(i) >= (len(self.chords_rd)/2)-1:
-                    dx -= 7
-
-        if turn == 'right':
-            dx = 4
-            for i in self.chords_rd:
-
-                if self.chords_rd[12][0] < 1280:
-                    i[0] += dx
-                    dx += 7
-
-                if self.chords_rd.index(i) >= (len(self.chords_rd)/2)-1:
-                    dx -= 3
+        k += 1
+"""
