@@ -17,12 +17,3 @@ class Car():
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
-
-
-    def update_car(self, move):
-
-        if move == 'right':
-            self.rect.x += 20
-
-        if move == 'left':
-            self.rect.x -= 20

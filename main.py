@@ -10,11 +10,9 @@ def main():
     pygame.init()
     g_set = Settings()
 
-    turn = 'center'
-
     screen = pygame.display.set_mode(g_set.res, pygame.FULLSCREEN|pygame.HWSURFACE|pygame.DOUBLEBUF)
     pygame.mixer.music.load(g_set.sound)
-    pygame.mixer.music.play(start=131)
+    pygame.mixer.music.play()
 
     clock = pygame.time.Clock()
 
@@ -24,10 +22,6 @@ def main():
     lines = pygame.sprite.Group()
     trees = pygame.sprite.Group()
 
-    TURNING = pygame.USEREVENT + 1
-
-    pygame.time.set_timer(TURNING, 500)
-
     run = None
     i = 0
 
@@ -35,10 +29,10 @@ def main():
     chord_y = g_set.chords_lines[6][1]
 
     while True:
-        screen.fill((0,0,0))
+        
         clock.tick(g_set.FPS)
 
-        turn = gf.check_events(screen, trees, chord_y, chord_x, turn, TURNING)
+        gf.check_events()
 
         keys = pygame.key.get_pressed()
         move = gf.check_keydown_events(keys)
@@ -48,13 +42,13 @@ def main():
         run = gf.make_map(i)
 
         chord_x, chord_y = bg.make_hills(run)
+        bg.turn_world_around_car(move)
 
         if i == 4:
             i = 0
 
-        if pygame.time.get_ticks() % 50 == 0:
+        if pygame.time.get_ticks() % 25 == 0:
             i += 1
-
 
 
         gf.append_l(screen, lines, g_set.color_imitate_speed, g_set.res, chord_y, move)
@@ -62,15 +56,15 @@ def main():
         for line in lines.copy():
             line.draw_lines()
 
-        for tr in trees.copy():
-            tr.draw_trees()
+        #for tr in trees.copy():
+        #    tr.draw_trees()
 
-        gf.imitate_speed(screen, lines, g_set.color_imitate_speed, g_set.res, move)
-        gf.append_tr(screen, trees, chord_y, chord_x)
-        gf.move_tr(screen, trees, move)
+        gf.imitate_speed(screen, lines, g_set.color_imitate_speed, g_set.res, move, chord_y)
+
+        #gf.append_tr(screen, trees, chord_y, chord_x)
+        #gf.move_tr(screen, trees, move)
 
         car.blitme()
-        #car.update_car(move)
 
         pygame.display.flip()
 
