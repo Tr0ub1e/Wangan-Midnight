@@ -38,9 +38,9 @@ def imitate_speed(screen, lines, color, res, move, y):
     for line in lines.copy():
 
         if move == "up":
-            line.rect.y += 50
+            line.rect.y += 25
 
-        line.rect.h += line.ddy*2
+        line.rect.h += line.ddy
         line.rect.y += (line.rect.h)/2
         line.ddy += 1
 

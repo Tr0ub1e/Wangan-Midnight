@@ -17,7 +17,7 @@ def main():
     clock = pygame.time.Clock()
 
     car = Car(screen)
-    bg = Background(screen, g_set.color_bg, g_set.color_rd, g_set.chords_lines)
+    bg = Background(screen, g_set.color_bg, g_set.color_rd, g_set.chords_lines, g_set.chords_lines2)
 
     lines = pygame.sprite.Group()
     trees = pygame.sprite.Group()
@@ -29,7 +29,7 @@ def main():
     chord_y = g_set.chords_lines[6][1]
 
     while True:
-        
+
         clock.tick(g_set.FPS)
 
         gf.check_events()
@@ -47,7 +47,7 @@ def main():
         if i == 4:
             i = 0
 
-        if pygame.time.get_ticks() % 25 == 0:
+        if pygame.time.get_ticks() % 50 == 0:
             i += 1
 
 
