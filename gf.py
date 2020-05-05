@@ -1,4 +1,7 @@
-from tree import Tree
+from random import randint
+from car import Car
+from os import getcwd
+from tunnel import Tunnel
 from speedline import Speedline
 import pygame
 
@@ -9,20 +12,12 @@ def check_events():
         if event.type == pygame.MOUSEBUTTONDOWN:
             print(pygame.mouse.get_pos())
 
-
-
-def check_keydown_events(keys):
+def check_going(keys):
     move = None
 
     if keys[pygame.K_ESCAPE]:
         pygame.quit()
         exit()
-
-    if keys[pygame.K_LEFT]:
-        move = "left"
-
-    if keys[pygame.K_RIGHT]:
-        move = "right"
 
     if keys[pygame.K_UP]:
         move = "up"
@@ -32,62 +27,89 @@ def check_keydown_events(keys):
 
     return move
 
+def check_car_turning(keys):
+    move = None
+
+    if keys[pygame.K_LEFT]:
+        move = "left"
+
+    if keys[pygame.K_RIGHT]:
+        move = "right"
+
+    return move
+
 
 def imitate_speed(screen, lines, color, res, move, y):
 
     for line in lines.copy():
-
+        line.ddy = 1
         if move == "up":
-            line.rect.y += 25
-
-        line.rect.h += line.ddy
-        line.rect.y += (line.rect.h)/2
-        line.ddy += 1
-
+            line.ddy += 2
+            line.rect.h += line.ddy
+            line.rect.y += line.rect.h
+            line.surf = pygame.transform.scale(line.surf, (1280, line.rect.h))
+            line.ddy += 2
 
         if line.rect.y > 720:
-            line.rect.y = y
-            line.ddy = 1
-            line.rect.h = 0
-
+            lines.remove(line)
 
 def append_l(screen, lines, color, res, chord, move):
-    if len(lines) < 18:
+    if len(lines) < 10:
         new_line = Speedline(screen, color, res, chord)
         lines.add(new_line)
 
-def append_tr(screen, trees, bottom, x):
-    if len(trees) < 10:
-        new_tree = Tree(screen, bottom, x)
-        trees.add(new_tree)
+    if not move == 'up':
 
-def move_tr(screen, trees, move):
+        for line in lines.copy():
 
-    for tr in trees.copy():
+            line.rect.h += line.ddy
+            line.rect.y += (line.rect.h)
 
-        if move == "down":
-            break
+            line.surf = pygame.transform.scale(line.surf, (1280, line.rect.h))
+            line.ddy += 2
 
 
-        tr.rect_l.y += tr.rect_im.h/6
-        tr.rect_l.x -= (tr.rect_im.w/2 + 30)
+def append_bots(cars, screen, x):
+    if len(cars) < 2:
+        new_car = Car(screen)
+        new_car.rect.y = 470
+        new_car.rect.x = randint(x-new_car.rect.w, x+new_car.rect.w)
+        new_car.image = pygame.transform.scale(pygame.image.load(getcwd()+"\\images\\nissan2.png").convert_alpha(), new_car.scal)
 
-        tr.rect_l2.y += tr.rect_im.h/6
-        tr.rect_l2.x = (1280 - tr.rect_l.x - tr.rect_l.w)
+        cars.add(new_car)
 
-        tr.sec_rect_im.y += tr.rect_im.h/6
-        tr.rect_im.y += tr.rect_im.h/6
+def bot_moving(cars):
 
-        tr.rect_im.x -= (tr.rect_im.w/2 + 25)
-        tr.sec_rect_im.x = (1280 - tr.rect_im.x - tr.rect_im.w)
+    for bot in cars:
+        bot.rect.y += 2
+        bot.scal[0] += 3
+        bot.scal[1] += 2
+        bot.image = pygame.transform.scale(pygame.image.load(getcwd()+"\\images\\nissan2.png").convert_alpha(), bot.scal)
 
+        if bot.rect.y > 720:
+            cars.remove(bot)
 
-        if tr.rect_im.y >= 720:
-            trees.remove(tr)
+def append_tun(tunnels, screen, x):
+    if len(tunnels) < 1:
+        new_tunnel = Tunnel(screen)
+        new_tunnel.rect_t_l.y, new_tunnel.rect_t_r.y = 430, 430
+        new_tunnel.rect_t_l.x, new_tunnel.rect_t_r.x = 620, 660-new_tunnel.rect_t_r.w
 
+        tunnels.add(new_tunnel)
 
-def make_map(i):
+def tunnel_mov(tunnels):
 
-    world = [False, False, True, True, False, False]
+    for elem in tunnels:
+        elem.rect_t_l.y -= 6
+        elem.rect_t_r.y -= 6
 
-    return world[i]
+        elem.rect_t_l.x -= 45
+        elem.rect_t_r.x += 5
+
+        elem.scal[0] += 50
+        elem.scal[1] += 7
+        elem.tunnel_l = pygame.transform.scale(pygame.image.load(getcwd()+"\\images\\tunnel_a.png").convert_alpha(), elem.scal)
+        elem.tunnel_r = pygame.transform.scale(pygame.image.load(getcwd()+"\\images\\tunnel_b.png").convert_alpha(), elem.scal)
+
+        if elem.rect_t_r.y < -12:
+            tunnels.remove(elem)

@@ -12,7 +12,14 @@ class Speedline(Sprite):
 
         self.ddy = 1
 
-        self.rect = pygame.Rect(0, self.chord, res[0], 0)
+
+        self.surf = pygame.Surface((1280, 1), pygame.SRCALPHA|pygame.RESIZABLE)
+        self.surf.fill(self.color)
+
+        self.rect = self.surf.get_rect()
+        self.rect.y = self.chord
+
+
 
     def draw_lines(self):
-        pygame.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.surf, self.rect)

@@ -21,6 +21,7 @@ class Background():
         self.chords_rd = chords_rd
         self.chords_rd2 = chords_rd2
         self.route = True
+        self.done = False
 
     def draw_background(self):
         self.bg_rect = pygame.Rect(0, self.chords_rd[6][1], 1280, 350)
@@ -54,10 +55,10 @@ class Background():
 
 
     def make_hills(self, run):
-        dx = -4
-        ddy = 0.5
+        dx = -3
+        ddy = 0.125
 
-        if run and self.chords_rd[6][1] < 467:
+        if run == 'road_up' and self.chords_rd[6][1] > 400 and self.route == True:
             k = 1
             for i in range(1, (len(self.chords_rd)//2)):
 
@@ -84,10 +85,55 @@ class Background():
                     self.chords_rd2[6+k][1] += ddy
 
                 self.rect_im.y += 1
+
+                self.chords_rd[6][1] -= 1
+                self.chords_rd[7][1] -= 1
+
+                self.chords_rd2[6][1] -= 1
+                self.chords_rd2[7][1] -= 1
+
                 k += 1
 
+                if self.chords_rd[6][1] > 410:
+                    self.route = None
 
-        if run == False and self.chords_rd[6][1] > 460:
+
+        if run == 'cam_up' and self.chords_rd[6][0] > 280 and self.route == None:
+            dx = -6
+            k = 1
+            for i in range(1, (len(self.chords_rd)//2)):
+
+                self.chords_rd[k][0] += dx
+                self.chords_rd[-k-1][0] -= dx
+
+                self.chords_rd2[k][0] += dx
+                self.chords_rd2[-k-1][0] -= dx
+
+                if k < 2:
+
+                    self.chords_rd[7-k][1] -= ddy
+                    self.chords_rd[6+k][1] -= ddy
+
+                    self.chords_rd2[7-k][1] -= ddy
+                    self.chords_rd2[6+k][1] -= ddy
+
+                if k > 3:
+
+                    self.chords_rd[7-k][1] += ddy
+                    self.chords_rd[6+k][1] += ddy
+
+                    self.chords_rd2[7-k][1] += ddy
+                    self.chords_rd2[6+k][1] += ddy
+
+                self.rect_im.y += 1
+
+                k += 1
+
+                if self.chords_rd[6][0] < 290:
+                    self.route = False
+
+        if run == 'cam_down' and self.chords_rd[6][0] < 601 and self.route == False:
+            dx = -6
             k = 1
             for i in range(1, (len(self.chords_rd)//2)):
 
@@ -99,14 +145,14 @@ class Background():
 
                 if k < 2:
 
-                    self.chords_rd[7-k][1] -= ddy
-                    self.chords_rd[6+k][1] -= ddy
+                    self.chords_rd[7-k][1] += ddy
+                    self.chords_rd[6+k][1] += ddy
 
-                    self.chords_rd2[7-k][1] -= ddy
-                    self.chords_rd2[6+k][1] -= ddy
+                    self.chords_rd2[7-k][1] += ddy
+                    self.chords_rd2[6+k][1] += ddy
 
 
-                elif k > 3:
+                if k > 3:
 
                     self.chords_rd[7-k][1] -= ddy
                     self.chords_rd[6+k][1] -= ddy
@@ -115,85 +161,63 @@ class Background():
                     self.chords_rd2[6+k][1] -= ddy
 
                 self.rect_im.y -= 1
+
                 k += 1
+
+            if self.chords_rd[6][0] >= 600:
+                self.route = True
 
 
         return self.chords_rd[6][0], self.chords_rd[6][1]
 
 
-    def turn_world_around_car(self, move):
+    def make_turns(self, move):
+        for i in range(len(self.chords_rd)//2):
+            if move == 'left':
+                if self.chords_rd[6][0] > 380:
+                    self.chords_rd[i][0] -= i//2
+                    self.chords_rd[-i-1][0] -= i//2
 
-        if move == "right":
+                    self.chords_rd2[i][0] -= i//2
+                    self.chords_rd2[-i-1][0] -= i//2
 
-            dx = -6
-            ddx = 6
-            k = 0
-
-            for i in range(0, (len(self.chords_rd)//2)):
+                    if i % 2 == 0:
+                        self.rect_im.x += 1
 
 
-                self.chords_rd[k][0] += dx
-                self.chords_rd[-k-1][0] += dx
+            if not move == 'left' and not move == 'right':
+                if self.chords_rd[6][0] < 620:
+                    self.chords_rd[i][0] += i//2
+                    self.chords_rd[-i-1][0] += i//2
 
-                self.chords_rd2[k][0] += dx
-                self.chords_rd2[-k-1][0] += dx
+                    self.chords_rd2[i][0] += i//2
+                    self.chords_rd2[-i-1][0] += i//2
 
-                self.chords_rd2[0][0] += dx/4
-                self.chords_rd2[-1][0] += dx/4
+                    if i % 2 == 0:
+                        self.rect_im.x -= 1
 
-                dx += ddx
-                k += 1
 
-            k = 0
-            dx = 30
+            if move == 'right':
+                if self.chords_rd[6][0] < 860:
+                    self.chords_rd[i][0] += i//2
+                    self.chords_rd[-i-1][0] += i//2
 
-            for i in range(0, (len(self.chords_rd)//2)):
+                    self.chords_rd2[i][0] += i//2
+                    self.chords_rd2[-i-1][0] += i//2
 
-                self.chords_rd[k][0] -= dx
-                self.chords_rd[-k-1][0] -= dx
 
-                self.chords_rd2[k][0] -= dx
-                self.chords_rd2[-k-1][0] -= dx
+                    if i % 2 == 0:
+                        self.rect_im.x -= 1
 
-                self.chords_rd2[0][0] -= dx/4
-                self.chords_rd2[-1][0] -= dx/4
+            if not move == 'left' and not move == 'right':
+                if self.chords_rd[6][0] > 620:
+                    self.chords_rd[i][0] -= i//2
+                    self.chords_rd[-i-1][0] -= i//2
 
-                self.rect_im.x += 1
-                k += 1
+                    self.chords_rd2[i][0] -= i//2
+                    self.chords_rd2[-i-1][0] -= i//2
 
-        if move == "left":
+                    if i % 2 == 0:
+                        self.rect_im.x += 1
 
-            dx = -6
-            ddx = 6
-            k = 0
-
-            for i in range(0, (len(self.chords_rd)//2)):
-
-                self.chords_rd[k][0] -= dx
-                self.chords_rd[-k-1][0] -= dx
-
-                self.chords_rd2[k][0] -= dx
-                self.chords_rd2[-k-1][0] -= dx
-
-                self.chords_rd2[0][0] -= dx/4
-                self.chords_rd2[-1][0] -= dx/4
-
-                dx += ddx
-                k += 1
-
-            k = 0
-            dx = 30
-
-            for i in range(0, (len(self.chords_rd)//2)):
-
-                self.chords_rd[k][0] += dx
-                self.chords_rd[-k-1][0] += dx
-
-                self.chords_rd2[k][0] += dx
-                self.chords_rd2[-k-1][0] += dx
-
-                self.chords_rd2[0][0] += dx/4
-                self.chords_rd2[-1][0] += dx/4
-
-                self.rect_im.x -= 1
-                k += 1
+        return self.chords_rd[6][0]
