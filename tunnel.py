@@ -3,7 +3,6 @@ from pygame.sprite import Sprite
 from os import getcwd
 
 
-
 class Tunnel(Sprite):
 
     def __init__(self, screen):

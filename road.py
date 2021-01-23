@@ -4,7 +4,7 @@ from os import getcwd
 
 class Background():
 
-    def __init__(self, screen, color_bg, color_rd, chords_rd=[], chords_rd2=[]):
+    def __init__(self, screen, color_bg, color_rd, chords_rd, chords_rd2):
 
         self.screen = screen
         self.im_bg = pygame.image.load(getcwd()+"\\images\\city2.png").convert_alpha()
@@ -219,5 +219,3 @@ class Background():
 
                     if i % 2 == 0:
                         self.rect_im.x += 1
-
-        return self.chords_rd[6][0]

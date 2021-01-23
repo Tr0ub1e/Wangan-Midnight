@@ -27,9 +27,9 @@ class Car(Sprite):
         self.rect = self.image.get_rect()
 
         self.rect.x = self.screen_rect.centerx - self.rect.centerx
-        self.rect.y = self.screen_rect.bottom - (self.rect.height)
+        self.rect.y = self.screen_rect.bottom - self.rect.height
 
-        self.scal = [25, 15]
+        self.scal = (25, 15)
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
@@ -56,11 +56,3 @@ class Car(Sprite):
 
         if not move == 'left' and not move == 'right':
             self.image = self.imagedef
-
-    def stay_road(self, turn):
-
-        if turn == 'right' and self.rect.x > 0:
-            self.rect.x -= 10
-
-        if turn == 'left' and self.rect.x < 1280:
-            self.rect.x += 10

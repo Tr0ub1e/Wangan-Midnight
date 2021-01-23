@@ -5,69 +5,58 @@ from tunnel import Tunnel
 from speedline import Speedline
 import pygame
 
+
 def check_events():
 
     for event in pygame.event.get():
 
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            print(pygame.mouse.get_pos())
+        if event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                exit()
+
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
 
 def check_going(keys):
-    move = None
-
-    if keys[pygame.K_ESCAPE]:
-        pygame.quit()
-        exit()
 
     if keys[pygame.K_UP]:
-        move = "up"
+        return "up"
 
     if keys[pygame.K_DOWN]:
-        move = "down"
+        return "down"
 
-    return move
-
-def check_car_turning(keys):
-    move = None
+def check_car_turning(keys, car):
 
     if keys[pygame.K_LEFT]:
-        move = "left"
+        car.car_move("left")
 
-    if keys[pygame.K_RIGHT]:
-        move = "right"
+    elif keys[pygame.K_RIGHT]:
+        car.car_move("right")
 
-    return move
+    else:
+        car.car_move(None)
 
 
-def imitate_speed(screen, lines, color, res, move, y):
+def imitate_speed(lines, move):
 
-    for line in lines.copy():
-        line.ddy = 1
-        if move == "up":
-            line.ddy += 2
-            line.rect.h += line.ddy
-            line.rect.y += line.rect.h
-            line.surf = pygame.transform.scale(line.surf, (1280, line.rect.h))
-            line.ddy += 2
+    if move == "up":
+        for line in lines:
+            line.rect.y += (line.rect.y // (lines.index(line)*10+1))
 
-        if line.rect.y > 720:
-            lines.remove(line)
 
 def append_l(screen, lines, color, res, chord, move):
-    if len(lines) < 10:
-        new_line = Speedline(screen, color, res, chord)
-        lines.add(new_line)
 
-    if not move == 'up':
+    if len(lines) < 15:
+        for i in range(15):
+            newline = Speedline(screen, color, res, chord-20, i*5+1)
+            lines.append(newline)
+            chord += 10*(i+1)
 
-        for line in lines.copy():
-
-            line.rect.h += line.ddy
-            line.rect.y += (line.rect.h)
-
-            line.surf = pygame.transform.scale(line.surf, (1280, line.rect.h))
-            line.ddy += 2
-
+    [lines.remove(line) for line in lines.copy() if line.rect.y > 1280]
 
 def append_bots(cars, screen, x):
     if len(cars) < 2:

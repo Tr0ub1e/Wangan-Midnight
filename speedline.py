@@ -3,17 +3,14 @@ from pygame.sprite import Sprite
 
 class Speedline(Sprite):
 
-    def __init__(self, screen, color, res, chord):
+    def __init__(self, screen, color, res, chord, height):
         super(Speedline, self).__init__()
 
         self.screen = screen
         self.color = color
         self.chord = chord
 
-        self.ddy = 1
-
-
-        self.surf = pygame.Surface((1280, 1), pygame.SRCALPHA|pygame.RESIZABLE)
+        self.surf = pygame.Surface((1280, height), pygame.SRCALPHA|pygame.RESIZABLE)
         self.surf.fill(self.color)
 
         self.rect = self.surf.get_rect()
